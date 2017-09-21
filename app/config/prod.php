@@ -9,4 +9,4 @@ $app['db.options'] = array(
      'dbname'   => 'microcms',
      'user'     => 'microcms_user',
      'password' => 'secret',
-); 
+);  
