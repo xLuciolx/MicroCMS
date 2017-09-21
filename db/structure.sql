@@ -1,17 +1,26 @@
-DROP TABLE IF EXISTS t_comment;
-DROP TABLE IF EXISTS t_article;
+drop table if exists t_comment;
+drop table if exists t_user;
+drop table if exists t_article;
 
-CREATE TABLE t_article (
-  art_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  art_title VARCHAR(100) NOT NULL,
-  art_content VARCHAR(2000) NOT NULL
-)
-engine=innodb CHARACTER SET utf8 COLLATE utf8_general_ci;
+create table t_article (
+    art_id integer not null primary key auto_increment,
+    art_title varchar(100) not null,
+    art_content varchar(2000) not null
+) engine=innodb character set utf8 collate utf8_unicode_ci;
 
-CREATE TABLE t_comment (
-  com_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  com_author VARCHAR(100) NOT NULL,
-  com_content VARCHAR(500) NOT NULL,
-  art_id INTEGER NOT NULL,
-  CONSTRAINT fk_com_art FOREIGN KEY(art_id) REFERENCES t_article(art_id)
-)engine=innodb CHARACTER SET utf8 COLLATE utf8_general_ci;
+create table t_user (
+    usr_id integer not null primary key auto_increment,
+    usr_name varchar(50) not null,
+    usr_password varchar(88) not null,
+    usr_salt varchar(23) not null,
+    usr_role varchar(50) not null
+) engine=innodb character set utf8 collate utf8_unicode_ci;
+
+create table t_comment (
+    com_id integer not null primary key auto_increment,
+    com_content varchar(500) not null,
+    art_id integer not null,
+    usr_id integer not null,
+    constraint fk_com_art foreign key(art_id) references t_article(art_id),
+    constraint fk_com_usr foreign key(usr_id) references t_user(usr_id)
+) engine=innodb character set utf8 collate utf8_unicode_ci;
